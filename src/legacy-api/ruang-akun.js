@@ -26,11 +26,42 @@ const MASA_SESI_UNIT_JAM = 12;
 /** Unit yang tercakup dalam satu PIN sekolah. */
 const AKSES_SEKOLAH = ["spmb", "sekolah", "tata-usaha"];
 
-const ITERASI = 120000;
+// Server modern membatasi PBKDF2 bawaan maksimal 100.000 iterasi.
+const ITERASI = 100000;
+
+/** PBKDF2-SHA256 manual (HMAC berulang) untuk hash lama di atas batas server. */
+function pbkdf2Manual(sandi, garam, iterasi, panjang) {
+  const hasil = [];
+  let total = 0;
+  for (let blok = 1; total < panjang; blok++) {
+    const idx = Buffer.alloc(4);
+    idx.writeUInt32BE(blok);
+    let u = crypto.createHmac("sha256", sandi).update(Buffer.concat([Buffer.from(garam), idx])).digest();
+    const t = Buffer.from(u);
+    for (let i = 1; i < iterasi; i++) {
+      u = crypto.createHmac("sha256", sandi).update(u).digest();
+      for (let j = 0; j < t.length; j++) t[j] ^= u[j];
+    }
+    hasil.push(t);
+    total += t.length;
+  }
+  return Buffer.concat(hasil).subarray(0, panjang);
+}
+
+function turunkan(sandi, garam, iterasi) {
+  if (iterasi <= 100000) {
+    try {
+      return crypto.pbkdf2Sync(String(sandi), garam, iterasi, 32, "sha256").toString("hex");
+    } catch {
+      /* jatuh ke versi manual */
+    }
+  }
+  return pbkdf2Manual(String(sandi), garam, iterasi, 32).toString("hex");
+}
 
 function acakSandi(sandi) {
   const garam = crypto.randomBytes(16).toString("hex");
-  const kunci = crypto.pbkdf2Sync(String(sandi), garam, ITERASI, 32, "sha256").toString("hex");
+  const kunci = turunkan(sandi, garam, ITERASI);
   return `pbkdf2$${ITERASI}$${garam}$${kunci}`;
 }
 
@@ -42,7 +73,7 @@ function cocokSandi(sandi, simpanan) {
   const garam = bagian[2];
   const kunci = bagian[3];
   if (!iterasi || !garam || !kunci) return false;
-  const uji = crypto.pbkdf2Sync(String(sandi), garam, iterasi, 32, "sha256").toString("hex");
+  const uji = turunkan(sandi, garam, iterasi);
   const a = Buffer.from(uji, "hex");
   const b = Buffer.from(kunci, "hex");
   if (a.length !== b.length || a.length === 0) return false;
