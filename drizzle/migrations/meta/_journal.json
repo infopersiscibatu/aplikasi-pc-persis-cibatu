@@ -8,6 +8,13 @@
       "when": 1791460544230,
       "tag": "0000_skema_persis_cibatu",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791460950281,
+      "tag": "0001_jalankan_ulang_perubahan",
+      "breakpoints": true
     }
   ]
 }
