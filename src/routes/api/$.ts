@@ -6,7 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
  */
 async function teruskan({ request }: { request: Request }) {
   try {
-    const { tangani } = await import("@/legacy-api/index.js");
+    const { tangani } = (await import("@/legacy-api/index.js" as string)) as { tangani: (r: Request) => Promise<Response> };
     return await tangani(request);
   } catch (e) {
     console.error("Layanan /api gagal:", e);
