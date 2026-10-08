@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791460544230,
+      "tag": "0000_skema_persis_cibatu",
+      "breakpoints": true
+    }
+  ]
 }
