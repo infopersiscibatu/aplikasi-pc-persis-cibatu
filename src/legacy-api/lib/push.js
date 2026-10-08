@@ -36,7 +36,7 @@ const __ekspor = function bantuanPush(tanya) {
     if (ada.rows.length > 0) {
       kunciVapid = { publicKey: ada.rows[0].publik, privateKey: ada.rows[0].privat };
     } else {
-      kunciVapid = webpush.generateVAPIDKeys();
+      kunciVapid = await webpush.generateVAPIDKeys();
       await tanya(
         `insert into push_vapid (id, publik, privat) values (1, $1, $2)
          on conflict (id) do update set publik = excluded.publik, privat = excluded.privat`,
