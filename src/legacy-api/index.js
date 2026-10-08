@@ -1,5 +1,5 @@
 // @ts-nocheck
-import __m0 from "express";
+import __m0, { layani } from "./express.js";
 import __m1 from "./db/pool.js";
 import __m2 from "./lib/push.js";
 import __m3 from "./lib/tagihanBulanan.js";
@@ -396,21 +396,20 @@ app.use((e, req, res, next) => {
 
 /* ---------------------------------- mulai ---------------------------------- */
 
-siapkanDatabase(tanya)
-  .then(async (hasil) => {
-    console.log(
-      hasil.diisi ? `Database siap & data awal ${hasil.versi} diisi.` : `Database siap (data awal ${hasil.versi ?? "belum ada"}).`,
-    );
-    const bawaan = await akses.siapkanAkses();
-    if (bawaan.dibuat) console.log("Akun admin dibuat dengan PIN bawaan 8081.");
-    await push.siapkanKunci();
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Layanan PC PERSIS Cibatu siap pada port ${PORT}.`);
+let siap = null;
+/** Pengganti app.listen: siapkan data awal & akun bawaan sekali, lalu layani permintaan. */
+export async function tangani(request) {
+  if (!siap) {
+    siap = (async () => {
+      const hasil = await siapkanDatabase(tanya);
+      if (hasil.diisi) console.log(`Data awal ${hasil.versi} diisi.`);
+      await akses.siapkanAkses();
+      await push.siapkanKunci();
+    })().catch((e) => {
+      siap = null;
+      throw e;
     });
-  })
-  .catch((e) => {
-    console.error("Gagal menyiapkan layanan:", e.message);
-    process.exit(1);
-  });
-
-export default __ekspor;
+  }
+  await siap;
+  return layani(app, request);
+}
