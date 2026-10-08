@@ -73,6 +73,7 @@ async function admin() {
 }
 
 export async function tanya(sql, params = []) {
+  if (/^\s*(begin|commit|rollback|start transaction)\b/i.test(String(sql))) return { rows: [], rowCount: 0 };
   const q = isiParameter(String(sql).trim().replace(/;\s*$/, ""), params);
   const db = await admin();
   const { data, error } = await db.rpc("jalankan_sql", { q });

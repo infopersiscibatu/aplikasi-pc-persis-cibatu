@@ -68,8 +68,7 @@ export async function unggah({ nama, tipe, data, folder, alt, keterangan }) {
     upsert: false,
   });
   if (error) throw new Error("Gagal menyimpan berkas: " + error.message);
-  const { data: pub } = db.storage.from(WADAH).getPublicUrl(kunci);
-  return { kunci, url: pub.publicUrl, ukuran: isi.length, tipe, nama: namaAman(nama), alt, keterangan };
+  return { kunci, url: `/berkas/${kunci}`, ukuran: isi.length, tipe, nama: namaAman(nama), alt, keterangan };
 }
 
 export async function hapus(kunci) {
