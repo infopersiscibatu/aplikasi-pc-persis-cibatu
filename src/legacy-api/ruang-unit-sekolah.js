@@ -424,6 +424,18 @@ const __ekspor = function pasangRuteUnitSekolah(app, { tanya, push }) {
       const sesi = sekolahWajib(req, res);
       if (!sesi) return;
 
+      /* Siswa lulus yang tagihannya kini sudah lunas otomatis masuk daftar alumni. */
+      await tanya(
+        `insert into alumni (id, nis, nama, jenjang_id, unit_id, tahun_lulus, telepon, santri_id, aktif)
+         select 'al-' || s.id, s.nis, s.nama, s.jenjang_id, s.unit_id, extract(year from now())::int, s.wali_telepon, s.id, true
+           from santri s
+          where s.unit_id = $1 and s.status = 'lulus'
+            and not exists (select 1 from alumni a where a.santri_id = s.id)
+            and not exists (select 1 from tagihan t where t.santri_id = s.id and t.status in ('belum', 'menunggu'))
+         on conflict (santri_id) do nothing`,
+        [sesi.unit_id],
+      );
+
       const cari = rapikan(req.query.cari, 60) ?? "";
       const nilai = [sesi.unit_id];
       let kondisi = "unit_id = $1 and aktif";
