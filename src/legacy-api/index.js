@@ -6,6 +6,7 @@ import __m3 from "./lib/tagihanBulanan.js";
 import __m4 from "./db/siapkan.js";
 import __m5 from "./lib/storage.js";
 import __m6 from "./ruang-admin.js";
+import pasangRuteTahunAjaran from "./ruang-tahun-ajaran.js";
 import __m7 from "./ruang-spmb.js";
 import __m8 from "./ruang-galeri.js";
 import __m9 from "./ruang-berita.js";
@@ -256,6 +257,7 @@ const akses = pasangRuteLogin(app, { tanya });
 app.use("/api/admin", akses.penjagaSesi);
 
 pasangRuteAdmin(app, { tanya });
+pasangRuteTahunAjaran(app, { tanya });
 pasangRuteSpmb(app, { tanya });
 pasangRuteGaleri(app, { tanya });
 pasangRuteBerita(app, { tanya });

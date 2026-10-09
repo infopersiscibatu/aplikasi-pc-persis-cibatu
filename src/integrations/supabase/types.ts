@@ -3026,6 +3026,8 @@ export type Database = {
       tahun_ajaran: {
         Row: {
           aktif: boolean
+          dibuat: string
+          diperbarui: string
           id: string
           mulai: string | null
           nama: string
@@ -3034,6 +3036,8 @@ export type Database = {
         }
         Insert: {
           aktif?: boolean
+          dibuat?: string
+          diperbarui?: string
           id: string
           mulai?: string | null
           nama: string
@@ -3042,6 +3046,8 @@ export type Database = {
         }
         Update: {
           aktif?: boolean
+          dibuat?: string
+          diperbarui?: string
           id?: string
           mulai?: string | null
           nama?: string

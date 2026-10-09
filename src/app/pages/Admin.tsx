@@ -16,6 +16,7 @@ import {
 } from "./admin/Identitas";
 import { GambarHalamanJenjang, NamaJenjang, TeksHalamanJenjang } from "./admin/JenjangPendidikan";
 import { NamaSekolah, ProgramJurusan } from "./admin/Sekolah";
+import DaftarTahunAjaran from "./admin/TahunAjaran";
 import {
   DaftarArtikel,
   GambarHalamanArtikel,
@@ -192,6 +193,12 @@ const KELOMPOK = [
       { id: "sekolah-jurusan", label: "Program Jurusan", ikon: "award" },
     ],
   },
+  {
+    id: "tahun",
+    label: "Tahun Ajaran",
+    ikon: "calendar",
+    item: [{ id: "tahun-ajaran", label: "Daftar Tahun Ajaran", ikon: "calendar" }],
+  },
 ] as const;
 
 /** Menu yang berdiri sendiri, tanpa sub-menu (mis. unit kerja di panel admin). */
@@ -205,7 +212,7 @@ const MENU_TUNGGAL = [
  * menurut label agar mudah dicari.
  */
 const SEKSI = [
-  { id: "lembaga", label: "Lembaga", isi: ["identitas", "jenjang", "sekolah"] },
+  { id: "lembaga", label: "Lembaga", isi: ["identitas", "jenjang", "sekolah", "tahun"] },
   {
     id: "konten",
     label: "Konten Website",
@@ -235,6 +242,7 @@ const JUDUL: Record<IdMenu, string> = {
   "jenjang-nama": "Nama Jenjang",
   "sekolah-nama": "Nama Sekolah",
   "sekolah-jurusan": "Program Jurusan",
+  "tahun-ajaran": "Tahun Ajaran",
   "spmb-teks": "Teks Halaman",
   "spmb-gambar": "Gambar Halaman",
   "spmb-gelombang": "Gelombang Pendaftaran",
@@ -625,6 +633,7 @@ export default function HalamanAdmin({
         {menu === "jenjang-nama" ? <NamaJenjang /> : null}
         {menu === "sekolah-nama" ? <NamaSekolah /> : null}
         {menu === "sekolah-jurusan" ? <ProgramJurusan /> : null}
+        {menu === "tahun-ajaran" ? <DaftarTahunAjaran /> : null}
         {menu === "spmb-teks" ? <TeksHalamanSpmb /> : null}
         {menu === "spmb-gambar" ? <GambarHalamanSpmb /> : null}
         {menu === "spmb-gelombang" ? <GelombangSpmb /> : null}

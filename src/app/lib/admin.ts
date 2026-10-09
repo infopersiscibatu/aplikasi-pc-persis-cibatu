@@ -388,3 +388,24 @@ export const ubahSosial = (id: string, nilai: Record<string, unknown>) =>
 export const hapusSosial = (id: string) => kirim(`/api/admin/sosial/${encodeURIComponent(id)}`, "DELETE");
 
 export const urutSosial = (urut: string[]) => kirim("/api/admin/sosial-urut", "POST", { urut });
+
+/* ------------------------------ tahun ajaran ------------------------------ */
+
+export type TahunAjaran = {
+  id: string;
+  nama: string;
+  semester: string | null;
+  mulai: string | null;
+  selesai: string | null;
+  aktif: boolean;
+};
+type JawabTA = { tahunAjaran: TahunAjaran[] };
+export const ambilTahunAjaran = () => minta<JawabTA>("/api/admin/tahun-ajaran");
+export const tambahTahunAjaran = (nilai: Record<string, unknown>) =>
+  kirim<JawabTA>("/api/admin/tahun-ajaran", "POST", nilai);
+export const ubahTahunAjaran = (id: string, nilai: Record<string, unknown>) =>
+  kirim<JawabTA>(`/api/admin/tahun-ajaran/${encodeURIComponent(id)}`, "PUT", nilai);
+export const aktifkanTahunAjaran = (id: string) =>
+  kirim<JawabTA>(`/api/admin/tahun-ajaran/${encodeURIComponent(id)}/aktif`, "POST");
+export const hapusTahunAjaran = (id: string) =>
+  kirim<JawabTA>(`/api/admin/tahun-ajaran/${encodeURIComponent(id)}`, "DELETE");
