@@ -1531,3 +1531,11 @@ revoke all on function public.jalankan_sql(text) from public, anon, authenticate
 grant execute on function public.jalankan_sql(text) to service_role;
 -- ===== penyimpanan berkas (bucket privat 'media') =====
 insert into storage.buckets (id, name, public) values ('media','media',false) on conflict (id) do nothing;
+
+-- ===== tahun ajaran: kelola dari panel admin, hanya satu yang aktif =====
+alter table public.tahun_ajaran add column if not exists dibuat timestamptz not null default now();
+alter table public.tahun_ajaran add column if not exists diperbarui timestamptz not null default now();
+create unique index if not exists idx_tahun_ajaran_satu_aktif on public.tahun_ajaran ((true)) where aktif;
+drop trigger if exists trg_tahun_ajaran_diperbarui on public.tahun_ajaran;
+create trigger trg_tahun_ajaran_diperbarui before update on public.tahun_ajaran
+  for each row execute function public.set_diperbarui();
