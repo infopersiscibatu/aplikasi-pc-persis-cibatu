@@ -123,11 +123,14 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const { belumDibaca, tandai, munculkanLagi } = useNotifikasi();
   const profil = useProfil();
-  /* Layar logo + "Memuat Data" tampil selama data pertama diambil. */
-  const [memuat, setMemuat] = useState(!profil.dariDatabase);
-  const mulaiMuat = useRef(Date.now());
   /* Susunan menu bawah disusun dari panel admin (lihat menu Beranda → Navigasi). */
   const beranda = useBeranda();
+  /* Layar logo + "Memuat Data" tampil sampai profil DAN data beranda (statistik,
+     carousel, grid menu) benar-benar tiba dari database, agar kartu statistik
+     tidak sempat menampilkan angka contoh. */
+  const dataSiap = profil.dariDatabase && beranda.dariDatabase;
+  const [memuat, setMemuat] = useState(!dataSiap);
+  const mulaiMuat = useRef(Date.now());
   const pindahRef = useRef<(t: string, s?: string) => void>(() => {});
 
   /* Keadaan terbaru untuk pendengar tombol kembali. */
@@ -136,11 +139,11 @@ export default function App() {
 
   /* Data sudah tiba: layar pembuka ditutup, tetapi tidak sekejap mata. */
   useEffect(() => {
-    if (!profil.dariDatabase) return;
+    if (!dataSiap) return;
     const sisa = Math.max(0, 450 - (Date.now() - mulaiMuat.current));
     const tutup = setTimeout(() => setMemuat(false), sisa);
     return () => clearTimeout(tutup);
-  }, [profil.dariDatabase]);
+  }, [dataSiap]);
 
   /* Jaringan lambat atau layanan tidak menjawab: layar pembuka tidak menahan pengunjung. */
   useEffect(() => {
