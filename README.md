@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Website Utama Persis Cibatu
+
+Salin semua kode github berikut https://github.com/infopersiscibatu/Website-Utama.git menjadi proyek disini. Jangan sampai ada kode yang tertinggal.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://persis-echo-site.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/e7cb3043-9819-4960-b567-968ff83b67c4).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
