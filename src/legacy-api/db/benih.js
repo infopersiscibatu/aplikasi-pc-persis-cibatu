@@ -7,7 +7,7 @@
  */
 
 /** Versi bahan benih saat ini. Bagian dengan versi lebih baru hanya diisi sekali. */
-const VERSI_BENIH = "v3";
+const VERSI_BENIH = "v4";
 
 /** Urutan penting: tabel induk didahulukan agar kunci asing terpenuhi. */
 const RENCANA = [

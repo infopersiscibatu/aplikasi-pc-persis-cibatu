@@ -1003,45 +1003,9 @@ alter table jurusan add column if not exists keterangan text;
 alter table jurusan add column if not exists diperbarui timestamptz not null default now();
 
 -- -------------------------------------------------------------------------------------
---  Data siswa/mahasiswa awal.
---  Jumlah peserta didik pada kartu jenjang dan kartu sekolah dihitung dari tabel santri
---  (status aktif atau calon). Supaya angka yang sudah tampil punya datanya, tabel santri
---  diisi sekali saja sebanyak angka yang berlaku saat ini. Dijalankan sekali (ada penanda).
+--  Data siswa/mahasiswa awal: DIHAPUS. Tabel santri sengaja dibiarkan kosong supaya
+--  seluruh angka di situs berasal dari data asli yang diisi pengelola, bukan data contoh.
 -- -------------------------------------------------------------------------------------
-do $$
-declare
-  depan text[] := array['Ahmad','Muhammad','Abdul','Abdullah','Fajar','Rizki','Ilham','Yusuf','Hafiz','Zaki','Aisyah','Fatimah','Siti','Nur','Dewi','Rina','Hana','Salma','Zahra','Nabila'];
-  tengah text[] := array['Fauzan','Ramadhan','Hidayat','Nurhalim','Saputra','Pratama','Maulana','Syahputra','Kurniawan','Setiawan','Rahmawati','Anggraeni','Kusuma','Mardhiyah','Azzahra','Wulandari','Nuraini','Fitriani','Handayani','Lestari'];
-  belakang text[] := array['Cibatu','Garut','Sindangsari','Padasuka','Mekarsari','Al-Furqan','Persis','Darul Falah','Nurul Huda','Al-Hidayah'];
-begin
-  if not exists (select 1 from pengaturan where kunci = 'santri_awal') then
-    insert into santri (id, nis, nama, jenjang_id, unit_id, kelas, jenis_kelamin, tahun_masuk, status)
-    select 'sn-' || u.id || '-' || lpad(g::text, 3, '0'),
-           coalesce(u.nomor, right(u.id, 4)) || '.' || lpad(g::text, 4, '0'),
-           depan[1 + (g % 20)] || ' ' || tengah[1 + ((g * 7) % 20)] || ' ' || belakang[1 + ((g * 3) % 10)],
-           j.id,
-           u.id,
-           case j.slug
-             when 'ra'  then 'Kelompok ' || case when g % 2 = 0 then 'A' else 'B' end
-             when 'mi'  then 'Kelas ' || (1 + (g % 6))::text
-             when 'mts' then 'Kelas ' || (7 + (g % 3))::text
-             when 'ma'  then 'Kelas ' || (10 + (g % 3))::text
-             when 'pt'  then 'Semester ' || (1 + (g % 8))::text
-             else 'Awaliyah'
-           end,
-           case when g % 2 = 0 then 'L' else 'P' end,
-           2019 + (g % 6),
-           'aktif'
-      from unit_pendidikan u
-      join jenjang j on j.id = u.jenjang_id
-      cross join generate_series(1, greatest(coalesce(u.jumlah_peserta, 0), 0)) as g
-     where not exists (select 1 from santri s where s.id = 'sn-' || u.id || '-' || lpad(g::text, 3, '0'));
-
-    insert into pengaturan (kunci, nilai, kelompok)
-    values ('santri_awal', to_jsonb(true), 'sistem')
-    on conflict (kunci) do nothing;
-  end if;
-end $$;
 
 -- ---------------------------------------------------------------------------------------
 -- Kartu statistik beranda: angka jumlah jenjang, siswa, dan mahasiswa dihitung
@@ -1339,20 +1303,8 @@ create table if not exists iklan (
   diperbarui  timestamptz not null default now()
 );
 
-insert into iklan (id, urutan, label, judul, teks, gambar_url, tautan, aktif) values
-  ('ik-1', 1, 'Iklan', 'Penerimaan Murid & Mahasiswa Baru 2026/2027',
-   'Kuota terbatas untuk RA, MI, MTs, MA, dan Perguruan Tinggi. Daftar lebih awal dan dapatkan potongan biaya pendaftaran.',
-   'https://images.unsplash.com/photo-1629273229664-11fabc0becc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200',
-   '#/spmb', true),
-  ('ik-2', 2, 'Iklan', 'Kajian Ahad Subuh Terbuka untuk Umum',
-   'Setiap Ahad, 05.30 WIB di Masjid Al-Furqan Cibatu. Hadir bersama jama''ah PC PERSIS Cibatu.',
-   'https://images.unsplash.com/photo-1569929919600-59123640bc02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200',
-   '#/kajian', true),
-  ('ik-3', 3, 'Iklan', 'Donasi Beasiswa Santri & Mahasiswa',
-   'Salurkan ZIS Anda untuk beasiswa santri dan mahasiswa berprestasi di lingkungan PC PERSIS Cibatu.',
-   'https://images.unsplash.com/photo-1589104760192-ccab0ce0d90f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200',
-   '#/donasi', true)
-on conflict (id) do nothing;
+-- Iklan bawaan: DIHAPUS. Slot iklan dibiarkan kosong; pengelola mengisinya sendiri
+-- dari panel admin supaya tidak ada konten contoh yang tampil di situs.
 
 -- -------------------------------------------------------------------------------------
 --  Agenda juga menghitung jumlah dibaca seperti berita, artikel, dan pengumuman.
