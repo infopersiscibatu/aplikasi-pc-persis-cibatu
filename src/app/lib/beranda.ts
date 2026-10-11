@@ -99,12 +99,7 @@ function dariStatis(): BerandaGabungan {
     carousel: [],
     gridMenu: [],
     navigasi: NAV_STATIS.map((t) => ({ halaman: t.id, label: t.label, ikon: t.icon, aktif: true })),
-    sosial: [
-      { id: "ts-wa", urutan: 1, nama: "WhatsApp", url: "https://wa.me/", ikon: "whatsapp", aktif: true },
-      { id: "ts-ig", urutan: 2, nama: "Instagram", url: "https://instagram.com", ikon: "instagram", aktif: true },
-      { id: "ts-fb", urutan: 3, nama: "Facebook", url: "https://facebook.com", ikon: "facebook", aktif: true },
-      { id: "ts-yt", urutan: 4, nama: "YouTube", url: "https://youtube.com", ikon: "youtube", aktif: true },
-    ],
+    sosial: [],
     halaman: HALAMAN_BAWAAN,
     dariDatabase: false,
   };
