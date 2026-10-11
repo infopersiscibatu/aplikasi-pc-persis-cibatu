@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { menu as menuStatis, slide as slideStatis, statistik as statistikStatis } from "../data/content";
+/* Data contoh dari ../data/content tidak dipakai lagi sebagai cadangan tampilan:
+   beranda hanya menampilkan data asli dari database. */
 
 /** Susunan bawaan navigasi bawah, dipakai bila pengaturan belum tersimpan. */
 const NAV_STATIS = [
@@ -92,40 +93,11 @@ export const IKON_SOSIAL = ["whatsapp", "instagram", "facebook", "youtube", "mai
 
 function dariStatis(): BerandaGabungan {
   return {
-    statistik: statistikStatis.map((s, i) => ({
-      id: s.id,
-      urutan: i + 1,
-      ikon: s.icon,
-      label: s.label,
-      labelPendek: s.labelPendek,
-      nilai: s.value,
-      satuan: s.unit,
-      catatan: s.note,
-      tone: s.tone,
-      aktif: true,
-      sumber: null,
-    })),
-    carousel: slideStatis.map((s, i) => ({
-      id: s.id,
-      urutan: i + 1,
-      tag: s.tag,
-      judul: s.title,
-      teks: s.text,
-      gambarUrl: s.image,
-      tombolLabel: null,
-      tombolHalaman: null,
-      aktif: true,
-    })),
-    gridMenu: menuStatis.map((m, i) => ({
-      id: m.id,
-      urutan: i + 1,
-      label: m.label,
-      keterangan: m.desc,
-      ikon: m.icon,
-      halaman: m.halaman,
-      lencana: ("badge" in m ? (m.badge as string) : null) ?? null,
-      aktif: true,
-    })),
+    /* Kartu statistik, carousel, grid menu, dan tautan sosial sengaja kosong:
+       angka contoh tidak boleh tampil sebelum data asli tiba dari database. */
+    statistik: [],
+    carousel: [],
+    gridMenu: [],
     navigasi: NAV_STATIS.map((t) => ({ halaman: t.id, label: t.label, ikon: t.icon, aktif: true })),
     sosial: [
       { id: "ts-wa", urutan: 1, nama: "WhatsApp", url: "https://wa.me/", ikon: "whatsapp", aktif: true },
