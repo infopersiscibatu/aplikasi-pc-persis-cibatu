@@ -14,3 +14,4 @@
 - Legacy SQL runs via service-role RPC `public.jalankan_sql` with client-side literal parameter substitution; all public tables are RLS-locked with no anon/authenticated grants because only the server touches them.
 - Web Push is implemented with WebCrypto in `src/legacy-api/lib/webpush-shim.js` (drop-in for the Node-only web-push library).
 - Uploaded files live in the private `media` bucket and are served by `src/routes/berkas/$.ts`.
+- Public sharing uses one browser-only content formatter and share dialog across detail views; preserve per-item hash links, use native sharing for image attachments when supported, and never assume a platform accepts prefilled captions.
