@@ -99,7 +99,7 @@ async function sendNotification(langganan, teks, opsi = {}) {
       TTL: String(opsi.TTL ?? 2419200),
       "Content-Encoding": "aes128gcm",
       "Content-Type": "application/octet-stream",
-      Urgency: "normal",
+      Urgency: "high",
       Authorization: `vapid t=${jwt}, k=${vapid.publicKey}`,
     },
     body: badan,
