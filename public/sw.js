@@ -17,6 +17,9 @@ self.addEventListener("push", (peristiwa) => {
     badge: "/favicon.png",
     tag: data.tag || "persis-cibatu",
     lang: "id",
+    /* Getar + prioritas tinggi: notifikasi jatuh dari atas layar seperti aplikasi Android. */
+    vibrate: [200, 100, 200],
+    requireInteraction: true,
     data: { url: data.url || "/" },
   };
 
