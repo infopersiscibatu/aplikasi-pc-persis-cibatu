@@ -5,3 +5,6 @@
 - [x] Upload foto/dokumen ke penyimpanan Lovable Cloud (/berkas/...)
 - [x] Kirim notifikasi ke layar HP (Web Push asli lewat WebCrypto)
 - [ ] Ganti PIN admin bawaan 8081 (dilakukan pemilik lewat halaman admin)
+- [ ] Hapus footer semua halaman
+- [ ] Tambahkan berbagi untuk artikel, berita, pengumuman, agenda, galeri, dan donasi
+- [ ] Uji pilihan berbagi dan tautan langsung

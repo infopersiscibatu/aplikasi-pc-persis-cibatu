@@ -1,5 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { Icon } from "./Icons";
+import TombolBagikan from "./TombolBagikan";
+import type { KontenBagikan } from "../lib/bagikan";
 
 export default function Popup({
   open,
@@ -9,6 +11,7 @@ export default function Popup({
   keterangan,
   detail,
   testId,
+  bagikan,
 }: {
   open: boolean;
   onClose: () => void;
@@ -17,6 +20,7 @@ export default function Popup({
   keterangan?: string;
   detail: string[];
   testId?: string;
+  bagikan?: KontenBagikan;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -64,6 +68,7 @@ export default function Popup({
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-3.5 pb-5">
+          {bagikan ? <div className="mb-4 flex justify-end"><TombolBagikan konten={bagikan} /></div> : null}
           <div className="border-t border-black/[0.08] pt-3.5">
             <div className="space-y-3">
               {detail.map((par, i) => (

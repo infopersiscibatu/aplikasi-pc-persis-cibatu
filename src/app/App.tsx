@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import BottomNav, { BottomNavWali, type TabId, type TabWali, type TabWaliIsi } from "./components/BottomNav";
 import DialogIzinNotifikasi from "./components/DialogIzinNotifikasi";
 import PopupInstall from "./components/PopupInstall";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Beranda from "./pages/Beranda";
 import HalamanArtikel from "./pages/Artikel";
@@ -64,6 +63,7 @@ function hashHalaman(halaman: string, slug: string | null): string {
   if (halaman === "berita-detail" && slug) return `#/berita/${slug}`;
   if (halaman === "artikel-detail" && slug) return `#/artikel/${slug}`;
   if (halaman === "donasi-detail" && slug) return `#/info/${slug}`;
+  if (halaman === "galeri" && slug) return `#/galeri/${slug}`;
   if (halaman === "beranda") {
     if (slug && slug.startsWith("pengumuman:")) return `#/beranda/pengumuman/${slug.slice("pengumuman:".length)}`;
     if (slug && slug.startsWith("agenda:")) return `#/beranda/agenda/${slug.slice("agenda:".length)}`;
@@ -94,6 +94,7 @@ function ruteDariAlamat(alamat: string): RuteApp {
   if (nama === "berita" && bagian[1]) return { halaman: "berita-detail", slug: bagian[1] };
   if (nama === "artikel" && bagian[1]) return { halaman: "artikel-detail", slug: bagian[1] };
   if (nama === "info" && bagian[1]) return { halaman: "donasi-detail", slug: bagian[1] };
+  if (nama === "galeri" && bagian[1]) return { halaman: "galeri", slug: bagian[1] };
   if (nama === "wali") {
     if (bagian[1] === "bayar") return { halaman: "wali-bayar", slug: null };
     const menu: WaliTab = bagian[1] === "nilai" || bagian[1] === "tagihan" || bagian[1] === "tahfidz" ? bagian[1] : "profil";
@@ -234,7 +235,7 @@ export default function App() {
             : null;
 
   return (
-    <div className="min-h-dvh bg-page">
+    <div className={`min-h-dvh bg-page ${panel ? "" : "pb-24"}`}>
       <DialogIzinNotifikasi />
       <PopupInstall />
 
@@ -288,7 +289,7 @@ export default function App() {
         />
       ) : null}
       {tab === "ppdb" ? <HalamanSpmb /> : null}
-      {tab === "galeri" ? <HalamanGaleri /> : null}
+      {tab === "galeri" ? <HalamanGaleri sasaran={slug} /> : null}
       {tab === "kontak" ? <HalamanKontak /> : null}
       {tab === "kajian" ? <HalamanKajian sasaran={slug} /> : null}
       {tab === "info" ? <HalamanDonasi onOpen={(s) => pindah("donasi-detail", s)} /> : null}
@@ -313,9 +314,6 @@ export default function App() {
           onKembali={() => pindah("info")}
         />
       ) : null}
-
-      {/* Portal wali santri tampil tanpa footer, seperti rujukan. */}
-      {tab === "wali" || tab === "wali-bayar" || panel ? null : <Footer />}
 
       {panel ? null : tab === "wali" || tab === "wali-bayar" ? (
         <BottomNavWali

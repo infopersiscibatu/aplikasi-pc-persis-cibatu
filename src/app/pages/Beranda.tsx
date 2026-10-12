@@ -106,6 +106,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
         open={pilih !== null}
         onClose={() => setPilih(null)}
         testId="popup-pengumuman"
+        bagikan={pilih ? { judul: pilih.title, ringkasan: pilih.summary, jalur: `/#/beranda/pengumuman/${pilih.id}` } : undefined}
         title={pilih?.title ?? ""}
         icon={<Icon name="megaphone" className={ikon} />}
         keterangan={
@@ -176,6 +177,7 @@ function BagianPengumuman() {
         open={pilih !== null}
         onClose={() => setPilih(null)}
         testId="popup-pengumuman-lengkap"
+        bagikan={pilih ? { judul: pilih.title, ringkasan: pilih.summary, jalur: `/#/beranda/pengumuman/${pilih.id}` } : undefined}
         title={pilih?.title ?? ""}
         icon={<Icon name="megaphone" className={ikon} />}
         keterangan={
@@ -257,6 +259,7 @@ function BagianAgenda({ sasaran }: { sasaran?: string | null }) {
         open={pilih !== null}
         onClose={() => setPilih(null)}
         testId="popup-agenda"
+        bagikan={pilih ? { judul: pilih.title, ringkasan: [pilih.date, pilih.time, pilih.place, pilih.detail[0]].filter(Boolean).join(" · "), jalur: `/#/beranda/agenda/${pilih.id}` } : undefined}
         title={pilih?.title ?? ""}
         icon={<Icon name="calendar" className={ikon} />}
         keterangan={

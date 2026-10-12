@@ -2,15 +2,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import JudulSeksi from "../components/JudulSeksi";
 import { Icon } from "../components/Icons";
 import { SEMUA_KATEGORI, fotoTampil, useGaleri } from "../lib/galeri";
+import TombolBagikan from "../components/TombolBagikan";
 
 const ikon = "h-[18px] w-[18px]";
 
-export function HalamanGaleri() {
+export function HalamanGaleri({ sasaran }: { sasaran?: string | null }) {
   const g = useGaleri();
   const [album, setAlbum] = useState<string>(SEMUA_KATEGORI);
   const [indeks, setIndeks] = useState<number | null>(null);
   const daftar = useMemo(() => fotoTampil(g, album), [g, album]);
   const lapisan = useRef(false);
+  const sudahDibuka = useRef<string | null>(null);
   const kategori = g.kategori.filter((k) => k.aktif);
   const namaAlbum = album === SEMUA_KATEGORI ? "Semua Kegiatan" : (kategori.find((k) => k.id === album)?.nama ?? album);
   const jumlahFoto = g.foto.filter((f) => f.aktif).length;
@@ -58,6 +60,16 @@ export function HalamanGaleri() {
   }, [indeks, daftar.length]);
 
   const fotoAktif = indeks === null ? null : daftar[indeks];
+
+  useEffect(() => {
+    if (!sasaran || sudahDibuka.current === sasaran || !g.dariDatabase) return;
+    const semua = fotoTampil(g, SEMUA_KATEGORI);
+    const i = semua.findIndex((f) => f.id === sasaran);
+    if (i < 0) return;
+    sudahDibuka.current = sasaran;
+    setAlbum(SEMUA_KATEGORI);
+    buka(i);
+  }, [sasaran, g]);
 
   return (
     <main data-testid="galeri-page">
@@ -204,6 +216,7 @@ export function HalamanGaleri() {
                 {fotoAktif.kategori} · {fotoAktif.tanggalTeks}
               </p>
               <p className="mt-1 text-[12.5px] leading-snug font-bold text-ink-900">{fotoAktif.judul}</p>
+              <div className="mt-3 flex justify-end"><TombolBagikan konten={{ judul: fotoAktif.judul, ringkasan: `${fotoAktif.kategori} · ${fotoAktif.tanggalTeks}`, gambar: fotoAktif.gambar, jalur: `/#/galeri/${fotoAktif.id}` }} /></div>
             </div>
             <div className="mt-3 flex items-center justify-between gap-2">
               <button
