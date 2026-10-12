@@ -17,6 +17,9 @@ export default function Hero() {
     return () => window.clearTimeout(t);
   }, [aktif, berhenti, jumlah]);
 
+  // Belum ada slide di database: jangan tampilkan apa pun (hindari crash).
+  if (!kini) return null;
+
   return (
     <section
       aria-label="Galeri sorotan"
