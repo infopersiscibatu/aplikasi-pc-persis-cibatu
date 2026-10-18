@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import GridMenu from "../components/GridMenu";
 import { BagianTrending } from "../components/KartuBerita";
 import Hero from "../components/Hero";
-import KartuStatistik from "../components/KartuStatistik";
+import PencarianBeranda from "../components/PencarianBeranda";
 import JudulSeksi from "../components/JudulSeksi";
 import Popup from "../components/Popup";
 import { Icon } from "../components/Icons";
@@ -291,11 +291,15 @@ export default function Beranda({
   const dataBerita = useBerita();
 
   return (
-    <main>
-      <Hero />
+    <main className="min-h-screen bg-mint-100/60">
+      <PencarianBeranda onPilihMenu={onPilihMenu} onBukaBerita={onBukaBerita} />
       <div className="mx-auto w-full max-w-[620px] px-5">
-        <KartuStatistik />
-        <div className="space-y-7 pt-7 pb-7">
+        <div className="pt-5">
+          <div className="overflow-hidden rounded-3xl shadow-[0_10px_30px_-16px_rgba(14,75,43,0.5)] empty:hidden">
+            <Hero />
+          </div>
+        </div>
+        <div className="space-y-7 pt-6 pb-7">
           <GridMenu onSelect={onPilihMenu} />
           <BagianPengumumanTerbaru sasaran={pengumumanBuka} />
           <BagianTrending items={beritaTrending(dataBerita, 5)} total={terbitSaja(dataBerita).length} onOpen={onBukaBerita} />
