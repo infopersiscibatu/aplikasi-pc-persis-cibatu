@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import GridMenu from "../components/GridMenu";
 import { BagianTrending } from "../components/KartuBerita";
 import Hero from "../components/Hero";
-import KartuStatistik from "../components/KartuStatistik";
+import PencarianBeranda from "../components/PencarianBeranda";
 import JudulSeksi from "../components/JudulSeksi";
 import Popup from "../components/Popup";
 import { Icon } from "../components/Icons";
@@ -54,7 +54,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
       />
 
       {utama ? (
-      <article className="rounded-2xl border border-black/[0.08] border-l-[3px] border-l-gold-500 bg-white p-4">
+      <article className="rounded-3xl border-l-[4px] border-l-gold-500 bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)] p-4">
         <p className="text-[9.5px] font-semibold tracking-[0.14em] text-persis-900 uppercase">
           {utama.pinned ? "Disematkan" : "Terbaru"} · {tanggalPanjang(utama.date)}
         </p>
@@ -77,7 +77,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
       </article>
       ) : null}
 
-      <ul className="mt-2.5 divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="mt-2.5 divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {lain.map((p) => (
           <li key={p.id}>
             <button
@@ -142,7 +142,7 @@ function BagianPengumuman() {
         subtitle="Lima pengumuman terbaru"
       />
 
-      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {items.map((p) => {
           const { day, month } = tanggalKotak(p.date);
           return (
@@ -222,7 +222,7 @@ function BagianAgenda({ sasaran }: { sasaran?: string | null }) {
         subtitle="Jadwal terdekat lebih dahulu"
       />
 
-      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {items.map((a) => {
           const { day, month } = tanggalKotak(a.date);
           return (
@@ -291,11 +291,15 @@ export default function Beranda({
   const dataBerita = useBerita();
 
   return (
-    <main>
-      <Hero />
+    <main className="min-h-screen bg-mint-100/60">
+      <PencarianBeranda onPilihMenu={onPilihMenu} onBukaBerita={onBukaBerita} />
       <div className="mx-auto w-full max-w-[620px] px-5">
-        <KartuStatistik />
-        <div className="space-y-7 pt-7 pb-7">
+        <div className="pt-5">
+          <div className="overflow-hidden rounded-3xl shadow-[0_10px_30px_-16px_rgba(14,75,43,0.5)] empty:hidden">
+            <Hero />
+          </div>
+        </div>
+        <div className="space-y-7 pt-6 pb-7">
           <GridMenu onSelect={onPilihMenu} />
           <BagianPengumumanTerbaru sasaran={pengumumanBuka} />
           <BagianTrending items={beritaTrending(dataBerita, 5)} total={terbitSaja(dataBerita).length} onOpen={onBukaBerita} />
