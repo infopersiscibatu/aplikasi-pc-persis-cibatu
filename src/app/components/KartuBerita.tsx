@@ -83,37 +83,30 @@ export function BagianTrending({
         subtitle={subtitle}
         actionLabel={null}
       />
-      <ol className="divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
-        {items.map((n, i) => (
-          <li key={n.id}>
+      <ol className="-mx-5 flex snap-x gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none]">
+        {items.map((n) => (
+          <li key={n.id} className="w-[170px] shrink-0 snap-start">
             <a
               href={`#berita/${n.slug}`}
               onClick={(e) => {
                 e.preventDefault();
                 onOpen(n);
               }}
-              className="flex items-start gap-3 px-4 py-3 transition active:bg-cream-50"
+              className="block overflow-hidden rounded-2xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)] transition active:scale-[0.98]"
             >
-              <span className="font-header w-4 shrink-0 pt-0.5 text-[12px] font-bold text-persis-900">{i + 1}</span>
-              <img src={n.image} alt="" loading="lazy" className="h-14 w-14 shrink-0 rounded-xl object-cover" />
-              <div className="min-w-0 flex-1">
-                <h3 className="line-clamp-2 text-[12.5px] leading-snug font-medium text-ink-900">{n.title}</h3>
-                <p className="mt-1 flex items-center gap-2 text-[10.5px] text-persis-900">
-                  <span className="inline-flex items-center gap-1">
-                    <Icon name="eye" className="h-3.5 w-3.5" />
-                    {angkaRingkas(n.views)} dibaca
-                  </span>
-                  <span>·</span>
-                  <span>{tanggalRelatif(n.date)}</span>
+              <img src={n.image} alt="" loading="lazy" className="h-[100px] w-full object-cover" />
+              <div className="p-3">
+                <h3 className="line-clamp-2 text-[12.5px] leading-snug font-bold text-ink-900">{n.title}</h3>
+                <p className="mt-1 flex items-center gap-1 text-[10.5px] text-ink-500">
+                  <Icon name="eye" className="h-3 w-3" />
+                  {angkaRingkas(n.views)} · {tanggalRelatif(n.date)}
                 </p>
               </div>
             </a>
           </li>
         ))}
       </ol>
-      <p className="mt-2 text-[10.5px] text-persis-900">
-        {items.length} teratas dari {total ?? items.length} berita
-      </p>
+      <p className="sr-only">{items.length} teratas dari {total ?? items.length} berita</p>
     </section>
   );
 }
