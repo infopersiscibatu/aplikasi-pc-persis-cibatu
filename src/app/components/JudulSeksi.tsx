@@ -21,7 +21,7 @@ export default function JudulSeksi({
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
       <div className="flex min-w-0 items-center gap-2.5">
-        {icon ? (
+        {false && icon ? (
           <span
             className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border ${
               tone === "gold"
@@ -38,18 +38,17 @@ export default function JudulSeksi({
           ) : null}
           <h2
             id={judulId}
-            className={`font-header truncate text-[15px] font-bold tracking-[-0.01em] text-ink-900 ${eyebrow ? "mt-1" : ""}`}
+            className={`font-header truncate text-[16px] font-bold tracking-[-0.01em] text-ink-900 ${eyebrow ? "mt-1" : ""}`}
           >
             {title}
           </h2>
-          {subtitle ? <p className="truncate text-[11.5px] text-persis-900">{subtitle}</p> : null}
+          {false && subtitle ? <p className="truncate text-[11.5px] text-persis-900">{subtitle}</p> : null}
         </div>
       </div>
 
       {actionLabel ? (
-        <span className="inline-flex shrink-0 items-center gap-0.5 px-1 py-1 text-[11.5px] font-semibold text-persis-900">
+        <span className="inline-flex shrink-0 items-center gap-0.5 px-1 py-1 text-[12px] font-medium text-ink-500">
           {actionLabel}
-          <Icon name="chevron-right" className="h-3.5 w-3.5 text-gold-600" />
         </span>
       ) : null}
     </div>
