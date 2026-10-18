@@ -9,12 +9,11 @@ export default function BottomNav({ active, onChange }: { active: string | null;
   return (
     <nav
       aria-label="Navigasi bawah"
-      className="fixed bottom-0 left-0 z-40 w-full border-t border-black/5 bg-white/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 px-4" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <ul
-        className="mx-auto grid w-full max-w-[620px] px-2 pt-1.5"
+        className="mx-auto grid w-full max-w-[460px] gap-1 rounded-full bg-white p-1.5 shadow-[0_12px_32px_-12px_rgba(14,75,43,0.45)]"
         style={{
-          paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))",
           gridTemplateColumns: `repeat(${Math.max(tab.length, 1)}, minmax(0, 1fr))`,
         }}
       >
@@ -27,12 +26,12 @@ export default function BottomNav({ active, onChange }: { active: string | null;
                 onClick={() => onChange(t.halaman)}
                 aria-current={ini ? "page" : undefined}
                 data-testid={`nav-${t.halaman}`}
-                className={`flex w-full flex-col items-center gap-1 rounded-xl py-1.5 transition active:scale-95 ${
-                  ini ? "text-persis-900" : "text-ink-400"
+                className={`flex h-11 w-full items-center justify-center gap-1.5 rounded-full transition active:scale-95 ${
+                  ini ? "bg-persis-900 text-white" : "text-ink-400"
                 }`}
               >
-                <Icon name={t.ikon} className="h-[21px] w-[21px]" />
-                <span className={`text-[10px] ${ini ? "font-bold" : "font-medium"}`}>{t.label}</span>
+                <Icon name={t.ikon} className="h-[20px] w-[20px] shrink-0" />
+                <span className={ini ? "text-[11px] font-bold" : "sr-only"}>{t.label}</span>
               </button>
             </li>
           );
@@ -70,11 +69,10 @@ export function BottomNavWali({
   return (
     <nav
       aria-label="Navigasi portal wali"
-      className="fixed bottom-0 left-0 z-40 w-full border-t border-black/5 bg-white/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 px-4" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <ul
-        className="mx-auto grid w-full max-w-[620px] grid-cols-5 px-2 pt-1.5"
-        style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}
+        className="mx-auto grid w-full max-w-[460px] grid-cols-5 gap-1 rounded-full bg-white p-1.5 shadow-[0_12px_32px_-12px_rgba(14,75,43,0.45)]"
       >
         {tabWali.map((t) => {
           const ini = active === t.id;
@@ -85,12 +83,12 @@ export function BottomNavWali({
                 onClick={() => (t.id === "beranda" ? onBeranda() : onPilih(t.id))}
                 aria-current={ini ? "page" : undefined}
                 data-testid={`nav-wali-${t.id}`}
-                className={`flex w-full flex-col items-center gap-1 rounded-xl py-1.5 transition active:scale-95 ${
-                  ini ? "text-persis-900" : "text-ink-400"
+                className={`flex h-11 w-full items-center justify-center gap-1.5 rounded-full transition active:scale-95 ${
+                  ini ? "bg-persis-900 text-white" : "text-ink-400"
                 }`}
               >
-                <Icon name={t.icon} className="h-[21px] w-[21px]" />
-                <span className={`text-[10px] ${ini ? "font-bold" : "font-medium"}`}>{t.label}</span>
+                <Icon name={t.icon} className="h-[20px] w-[20px] shrink-0" />
+                <span className={ini ? "text-[11px] font-bold" : "sr-only"}>{t.label}</span>
               </button>
             </li>
           );

@@ -54,7 +54,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
       />
 
       {utama ? (
-      <article className="rounded-3xl border-l-[4px] border-l-gold-500 bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)] p-4">
+      <article className="rounded-3xl bg-mint-deep p-4">
         <p className="text-[9.5px] font-semibold tracking-[0.14em] text-persis-900 uppercase">
           {utama.pinned ? "Disematkan" : "Terbaru"} · {tanggalPanjang(utama.date)}
         </p>
