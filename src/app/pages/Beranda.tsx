@@ -54,7 +54,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
       />
 
       {utama ? (
-      <article className="rounded-2xl border border-black/[0.08] border-l-[3px] border-l-gold-500 bg-white p-4">
+      <article className="rounded-3xl border-l-[4px] border-l-gold-500 bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)] p-4">
         <p className="text-[9.5px] font-semibold tracking-[0.14em] text-persis-900 uppercase">
           {utama.pinned ? "Disematkan" : "Terbaru"} · {tanggalPanjang(utama.date)}
         </p>
@@ -77,7 +77,7 @@ function BagianPengumumanTerbaru({ sasaran }: { sasaran?: string | null }) {
       </article>
       ) : null}
 
-      <ul className="mt-2.5 divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="mt-2.5 divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {lain.map((p) => (
           <li key={p.id}>
             <button
@@ -142,7 +142,7 @@ function BagianPengumuman() {
         subtitle="Lima pengumuman terbaru"
       />
 
-      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {items.map((p) => {
           const { day, month } = tanggalKotak(p.date);
           return (
@@ -222,7 +222,7 @@ function BagianAgenda({ sasaran }: { sasaran?: string | null }) {
         subtitle="Jadwal terdekat lebih dahulu"
       />
 
-      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <ul className="divide-y divide-black/[0.06] overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_-12px_rgba(14,75,43,0.35)]">
         {items.map((a) => {
           const { day, month } = tanggalKotak(a.date);
           return (
